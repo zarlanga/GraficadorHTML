@@ -34,7 +34,7 @@ and open the template in the editor.
                 
             </p> -->
             </form>
-            <p id="msg" style="float: left;">asdf
+            <p id="msg" style="float: left;">
 
             </p>
 
@@ -119,16 +119,18 @@ and open the template in the editor.
                     while (xC - escala > 0 && xC - escala <xf && yC + escala > 0 && yC + escala <yf) {
                         xC -= escala;
                         yC -= -(m * escala);
-                        //mostrarmensaje("x " + xC + "  y" +  yC);
+                        
                     }
+                    //mostrarmensaje("punto 1: x " + xC + "  y" +  yC);
                     ctx.lineWidth=3;
                     ctx.beginPath();
                     ctx.moveTo(xC, yC);
-                    while (xC + escala > 0 && xC + escala <xf && yC -(m * escala) >= 0 && yC -(m * escala) <= yf) {
+                    do {
                         xC += escala;
                         yC += -(m * escala);
                         //mostrarmensaje("x " + xC + "  y" +  yC);
-                    }
+                    } while (xC + escala > 0 && xC + escala <xf && yC -(m * escala) >= 0 && yC -(m * escala) <= yf)
+                    //mostrarmensaje("punto 2: x " + xC + "  y" +  yC);
                     ctx.lineTo(xC, yC);
                     ctx.strokeStyle = "blue";
                     ctx.stroke();
