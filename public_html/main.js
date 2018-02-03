@@ -1,7 +1,7 @@
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 
+ * arreglado bug de funcion seno
+ * 
  */
 
 var escala = 20;
@@ -56,10 +56,10 @@ function graficarEje() {
 }
 
 function setValoresSe(e, fr, am, fa) {
-    escala=e;
-    m = fr;
-    a = am;
-    b = fa;
+    escala=Number(e);
+    m = Number(fr);
+    a = Number(am);
+    b = Number(fa);
     document.getElementById("fr1").innerHTML = fr;
     document.getElementById("a1").innerHTML = am;
     document.getElementById("fa1").innerHTML = fa;
@@ -83,16 +83,18 @@ function graficarFuncionSe() {
     //}, 300);
     ctx.strokeStyle = "blue";
     for (xS = 0; xS < xf; xS += escala / 5) {
-        //mostrarmensaje(xS);
+        
         // alert(yS);
         yS = (yf / 2 - a * escala * Math.sin(b + m * ((xS / escala) 
-                // - ( xf / (escala * 2))
+                 - ( xf / (escala * 2))
                 ) ));
         //  alert(yS);
-
+       // mostrarmensaje(xS + " " + (b + m * ((xS / escala) 
+       //          - ( xf / (escala * 2))
+       //         )) );
         ctx.beginPath();
-        ctx.moveTo(xS, yA);
-        ctx.lineTo(xS + escala / 5, yS);
+        ctx.moveTo(xS - escala / 5, yA);
+        ctx.lineTo(xS , yS);
         ctx.stroke();
         yA = yS;
 
@@ -115,9 +117,9 @@ function setValoresLi(e, p, b) {
     //alert(p+ "   " + b);
     // document.getElementsByClassName("pendiente").innerHTML = p;
     // document.getElementsByClassName("altura").innerHTML = b;
-    escala=e;
-    m = p;
-    a = b;
+    escala=Number(e);
+    m = Number(p);
+    a = Number(b);
     
     //document.getElementById("pend").innerHTML = p;
     //document.getElementById("alt").innerHTML = b;
@@ -146,7 +148,7 @@ function graficarFuncionLi() {
     ctx.beginPath();
     ctx.moveTo(xC, yC);
     do {
-        xC += (1 *escala);
+        xC += escala;
         yC += -(m * escala);
         //mostrarmensaje("x " + xC + "  y" +  yC);
     } while (xC > 0 && xC < xf && yC > 0 && yC < yf)
