@@ -10,7 +10,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body onload="setValoresCu(e.value, a.value, b.value, c.value)">
+    <body >
         <div>
             <form   method="get" style="float: right;">
                 
@@ -35,7 +35,7 @@ and open the template in the editor.
                 <br> <br> <br>
                 Escala: 
                 <!--  <span id="alt" >1</span> -->
-                <input  type="number" id="e" min="1" value="20"> px
+                <input  type="number" oninput="setValoresPo(e.value, n.value)" id="e" min="1" value="20"> px
                 </p> 
             </form>
             <p id="msg" style="float: left;"></p>
