@@ -265,8 +265,65 @@ function graficarFuncionLi() {
     //mostrarmensaje(xC + "  " + yC);
 }
 
+function setTerminosPo(n) {
+    document.getElementById("eq").innerHTML = "";
+    document.getElementById("val").innerHTML = "";
+    for (var i = n; i >= 0; i--) {
+        var eq = "<span id=\"i" + i + "\" >1</span>x<sup> " + i + "</sup>+";
+        var val = "termino " + i + "<input type=\"number\" id=\"a"+i+"\" \n\
+oninput=\"setValoresPo(n.value)\"  value=\"1\" step=\"0.2\" >  <br> <br>" ;
+        
+        document.getElementById("eq").innerHTML += eq;
+        document.getElementById("val").innerHTML += val;
+        
+        
+    }
+}
+
+function setValoresPo(n) {
+    for (var i = 0; i <= n; i++) {
+        
+       //var nomb =  + " ";
+        //alert(nomb);
+        document.getElementById("i"+i).innerHTML = document.getElementById("a"+i).value;
+        //alert("pusoooo");
+    }
+    graficarFuncionPo(n);
+}
 
 
+function graficarFuncionPo(n) {
+    var xS ;
+    var yS ;
+    var yA = yf / 2;
+
+
+
+    ctx.fillStyle = "coral";
+    ctx.fillRect(0, 0, 800, 600);
+    graficarEje();
+    //setInterval(function () {
+    //    trazarLineaSeno()
+    //}, 300);
+    ctx.strokeStyle = "blue";
+    
+    for (xS = 0; xS < xf; xS += escala / 5) {
+        yS=yf/2;
+        var x = xS / escala - xf / (escala * 2);
+        for (var i = 0; i <= n; i++) {
+            var a = document.getElementById("a"+i).value;
+            
+            yS -= escala * a * Math.pow(x, i);
+        }
+        ctx.beginPath();
+        ctx.moveTo(xS - escala / 5, yA);
+        ctx.lineTo(xS, yS);
+        ctx.stroke();
+        yA = yS;
+        //mostrarmensaje(xS + "  " + yS);
+        
+    }
+}
 
 
 

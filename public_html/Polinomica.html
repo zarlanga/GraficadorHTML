@@ -10,33 +10,41 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body onload="setValoresCu(e.value, a.value,b.value,c.value)">
+    <body onload="setValoresCu(e.value, a.value, b.value, c.value)">
         <div>
-            <form  oninput="setValoresCu(e.value, a.value,b.value,c.value)" method="get">
-                <p style="float: right;">
-                    <span id="a1" >1</span>x<sup>2</sup>+<span id="b1">1</span>x+<span id="c1">0</span>
-                    <br> <br>
-                    Ancho:
-                    <input type="number" id="a"  value="1" step="0.2" style="text-align: right"> 
-                    <br> <br>
-                    Desplazamiento x:
-                    <input  type="number" id="b" value="1" step="0.2" style="text-align: right"> 
-                    <br>  <br>
-                    Desplazamiento y:
-                    <input  type="number" id="c"  value="0" step="0.2" style="text-align:right"> 
-                    <br> <br> <br>
-                    Escala: 
-                    <!--  <span id="alt" >1</span> -->
-                    <input  type="number" id="e" min="1" value="20"> px
+            <form   method="get" style="float: right;">
+                
+
+                <p id="eq">
+
+                </p>
+                <br> <br>
+                <p id="val" >
+
+                </p>
+                <!--
+                <span id="a1" >1</span>x<sup>2</sup>+<span id="b1">1</span>x+<span id="c1">0</span>
+                <br> <br>
+                Ancho:
+                <input type="number" id="a"  value="1" step="0.2" style="text-align: right"> 
+                <br> <br>
+                -->
+                <p>
+                Grado:
+                <input  type="number" id="n"  value="3" oninput="setTerminosPo(n.value)" step="1" style="text-align:right"> 
+                <br> <br> <br>
+                Escala: 
+                <!--  <span id="alt" >1</span> -->
+                <input  type="number" id="e" min="1" value="20"> px
                 </p> 
             </form>
             <p id="msg" style="float: left;"></p>
-            
+
         </div>
-        
+
         <div>
             <canvas id="myCanvas" width="800" height="600" style="border:1px solid;background-color: coral"></canvas>
-        <script type="text/javascript" src="main.js"></script>
+            <script type="text/javascript" src="main.js"></script>
         </div>
     </body>
 </html>
