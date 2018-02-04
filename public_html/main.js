@@ -11,6 +11,13 @@
  *      --funcion resetearCanvas()
  * --corregido ecuacion polinomica
  * 
+ * ---agregado desplazamiento en y para seno y coseno (listo)
+ * ---unificado todo en una sola pagina
+ * pendiente
+ * ---ver polinomica
+ * 
+ * ---hacer tangente y hiperbole? 
+ * 
  */
 
 var escala = 20; //get del elemento e?
@@ -21,6 +28,7 @@ var yf = c.getAttribute("height");
 var m;
 var a;
 var b;
+var c;
 var xS;
 var yS;
 var yA;
@@ -28,6 +36,84 @@ var yA;
 //refactorizando
 
 graficarEje();
+
+function seleccionarEQ() {
+    o = document.getElementById("opcion").value;
+
+    if (o === "1") {
+        document.getElementById("cn").hidden = true;
+        document.getElementById("c").hidden = true;
+    } else {
+        document.getElementById("c").hidden = false;
+        document.getElementById("cn").hidden = false;
+    }
+
+    if (o !== "3" && o !== "4") {
+        document.getElementById("d").hidden = true;
+        document.getElementById("dn").hidden = true;
+    } else {
+        document.getElementById("d").hidden = false;
+        document.getElementById("dn").hidden = false;
+    }
+
+    //agregarPolinomica
+    mostrarEQ(o);
+
+
+    //alert(o);
+}
+
+function mostrarEQ(o) {
+
+    o = Number(o);
+    switch (o) {
+        case 1:
+            document.getElementById("eq").innerHTML = "<span id=\"t1\" style=\"text-align: right\" >1</span>x+<span id=\"t2\">1</span>";
+            document.getElementById("an").innerHTML = "Pendiente";
+            document.getElementById("ab").innerHTML = "Desplazamiento Y";
+            break;
+        case 2:
+            document.getElementById("eq").innerHTML = '<span id="t1" >1</span>x<sup>2</sup>+<span id="t2">1</span>x+<span id="t3">0</span>';
+            document.getElementById("an").innerHTML = "Ancho";
+            document.getElementById("bn").innerHTML = "Desplazamiento X";
+            document.getElementById("cn").innerHTML = "Desplazamiento Y";
+            break;
+        case 3:
+            document.getElementById("eq").innerHTML = '<span id="t1" >4</span>Sen(<span id="t2">1</span>x+<span id="t3">0</span>) + <span id="t4">0</span>';
+            document.getElementById("an").innerHTML = "Amplitud";
+            document.getElementById("bn").innerHTML = "Frecuencia";
+            document.getElementById("cn").innerHTML = "Desplazamiento X (Fase)";
+            break;
+        case 4:
+            document.getElementById("eq").innerHTML = '<span id="t1" >4</span>Cos(<span id="t2">1</span>x+<span id="t3">0</span>) + <span id="t4">0</span>';
+            document.getElementById("an").innerHTML = "Amplitud";
+            document.getElementById("bn").innerHTML = "Frecuencia";
+            document.getElementById("cn").innerHTML = "Desplazamiento X (Fase)";
+            break;
+        case 5:
+            alert("ver que onda");
+            break;
+
+
+    }
+    /*
+     if (o === "Lineal") {
+     
+     }
+     
+     if (o === "Cuadratica") {
+     }
+     
+     if (o === "Seno") {
+     }
+     
+     if (o === "Coseno") {
+     }
+     
+     if (o === "Polinomica") {
+     
+     } */
+}
 
 function graficarEje() {
     ctx.beginPath();
@@ -74,37 +160,48 @@ function resetearCanvas() {
     graficarEje();
     ctx.strokeStyle = "blue";
 
-    xS;
+
     yA = yf / 2;
 
 }
 
 
-function setValores(e, a1, a2, a3, s) {
+function setValores(e, a1, a2, a3, a4, o) {
     escala = Number(e);
     m = Number(a1);
     a = Number(a2);
+    o = Number(o);
 
     document.getElementById("t1").innerHTML = a1;
     document.getElementById("t2").innerHTML = a2;
 
-    if (a3 !== null) {
+    if (o !== 1) {
         b = Number(a3);
         document.getElementById("t3").innerHTML = a3;
     }
-
-    switch (s) {
+    
+    if (o===3 || o===4) {
+        c = Number(a4);
+        document.getElementById("t4").innerHTML = a4;
+    }
+    //alert(o);
+    switch (o) {
         case 1:
+           //alert("entro case 1");
             graficarFuncionLi();
             break;
+
         case 2:
-            graficarFuncionSe();
+      //      alert("entro case 2");
+            graficarFuncionCu();
             break;
         case 3:
-            graficarFuncionCo();
+      //      alert("entro case 3");
+            graficarFuncionSe();
             break;
         case 4:
-            graficarFuncionCu();
+      //      alert("entro case 4");
+            graficarFuncionCo();
             break;
 
     }
@@ -138,9 +235,9 @@ function graficarFuncionSe() {
     resetearCanvas();
     for (xS = 0; xS < xf; xS += escala / 5) {
 
-        yS = (yf / 2 - a * escala * Math.sin(b + m * ((xS / escala)
+        yS = (yf / 2 - m * escala * Math.sin(b + a * ((xS / escala)
                 - (xf / (escala * 2))
-                )));
+                )) + c * escala );
 
         ctx.beginPath();
         ctx.moveTo(xS - escala / 5, yA);
@@ -157,9 +254,9 @@ function graficarFuncionCo() {
 
     for (xS = 0; xS < xf; xS += escala / 5) {
 
-        yS = yf / 2 - a * escala * Math.cos(b + m * ((xS / escala)
+        yS = yf / 2 - m * escala * Math.cos(b + a * ((xS / escala)
                 - (xf / (escala * 2))
-                ));
+                )) + c * escala;
 
         ctx.beginPath();
         ctx.moveTo(xS - escala / 5, yA);
@@ -252,54 +349,54 @@ function mostrarmensaje(s) {
     document.getElementById("msg").innerHTML += s + "<br>";
 }
 /*
-function setValoresLi(e, p, b) {
-
-    escala = Number(e);
-    m = Number(p);
-    a = Number(b);
-
-    document.getElementById("pend1").innerHTML = p;
-    document.getElementById("alt1").innerHTML = b;
-    graficarFuncionLi();
-
-}
-
-function setValoresSe(e, fr, am, fa) {
-    escala = Number(e);
-    m = Number(fr);
-    a = Number(am);
-    b = Number(fa);
-    document.getElementById("fr1").innerHTML = fr;
-    document.getElementById("a1").innerHTML = am;
-    document.getElementById("fa1").innerHTML = fa;
-    graficarFuncionSe();
-
-}
-
-function setValoresCo(e, fr, am, fa) {
-    escala = Number(e);
-    m = Number(fr);
-    a = Number(am);
-    b = Number(fa);
-    document.getElementById("fr1").innerHTML = fr;
-    document.getElementById("a1").innerHTML = am;
-    document.getElementById("fa1").innerHTML = fa;
-    graficarFuncionCo();
-
-}
-
-
-function setValoresCu(e, fr, am, fa) {
-    escala = Number(e);
-    m = Number(fr);
-    a = Number(am);
-    b = Number(fa);
-    document.getElementById("a1").innerHTML = fr;
-    document.getElementById("b1").innerHTML = am;
-    document.getElementById("c1").innerHTML = fa;
-    graficarFuncionCu();
-
-}
-
-
-*/
+ function setValoresLi(e, p, b) {
+ 
+ escala = Number(e);
+ m = Number(p);
+ a = Number(b);
+ 
+ document.getElementById("pend1").innerHTML = p;
+ document.getElementById("alt1").innerHTML = b;
+ graficarFuncionLi();
+ 
+ }
+ 
+ function setValoresSe(e, fr, am, fa) {
+ escala = Number(e);
+ m = Number(fr);
+ a = Number(am);
+ b = Number(fa);
+ document.getElementById("fr1").innerHTML = fr;
+ document.getElementById("a1").innerHTML = am;
+ document.getElementById("fa1").innerHTML = fa;
+ graficarFuncionSe();
+ 
+ }
+ 
+ function setValoresCo(e, fr, am, fa) {
+ escala = Number(e);
+ m = Number(fr);
+ a = Number(am);
+ b = Number(fa);
+ document.getElementById("fr1").innerHTML = fr;
+ document.getElementById("a1").innerHTML = am;
+ document.getElementById("fa1").innerHTML = fa;
+ graficarFuncionCo();
+ 
+ }
+ 
+ 
+ function setValoresCu(e, fr, am, fa) {
+ escala = Number(e);
+ m = Number(fr);
+ a = Number(am);
+ b = Number(fa);
+ document.getElementById("a1").innerHTML = fr;
+ document.getElementById("b1").innerHTML = am;
+ document.getElementById("c1").innerHTML = fa;
+ graficarFuncionCu();
+ 
+ }
+ 
+ 
+ */
