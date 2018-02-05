@@ -13,8 +13,11 @@
  * 
  * ---agregado desplazamiento en y para seno y coseno (listo)
  * ---unificado todo en una sola pagina
+ * 
+ * -----ver polinomica
+ * -----eliminado paginas accesorias
  * pendiente
- * ---ver polinomica
+ * 
  * 
  * ---hacer tangente y hiperbole? 
  * 
@@ -40,20 +43,33 @@ graficarEje();
 function seleccionarEQ() {
     o = document.getElementById("opcion").value;
 
-    if (o === "1") {
-        document.getElementById("cn").hidden = true;
-        document.getElementById("c").hidden = true;
+    if (o === "5") {
+        document.getElementById("bd").hidden = true;
+        document.getElementById("val").hidden = false;
+        //document.getElementById("bn").hidden = true;
+        //document.getElementById("b").hidden = true;
     } else {
-        document.getElementById("c").hidden = false;
-        document.getElementById("cn").hidden = false;
+        document.getElementById("val").hidden = true;
+    }
+
+    if (o === "1" || o === "5") {
+        document.getElementById("cd").hidden = true;
+        //document.getElementById("cn").hidden = true;
+       // document.getElementById("c").hidden = true;
+    } else {
+        document.getElementById("cd").hidden = false;
+       // document.getElementById("c").hidden = false;
+       // document.getElementById("cn").hidden = false;
     }
 
     if (o !== "3" && o !== "4") {
-        document.getElementById("d").hidden = true;
-        document.getElementById("dn").hidden = true;
+        document.getElementById("dd").hidden = true;
+       // document.getElementById("d").hidden = true;
+       // document.getElementById("dn").hidden = true;
     } else {
-        document.getElementById("d").hidden = false;
-        document.getElementById("dn").hidden = false;
+        document.getElementById("dd").hidden = false;
+       // document.getElementById("d").hidden = false;
+       // document.getElementById("dn").hidden = false;
     }
 
     //agregarPolinomica
@@ -91,7 +107,11 @@ function mostrarEQ(o) {
             document.getElementById("cn").innerHTML = "Desplazamiento X (Fase)";
             break;
         case 5:
-            alert("ver que onda");
+            document.getElementById("an").innerHTML = "Grado";
+            document.getElementById("a").step = "1";
+            document.getElementById("a").value = "3";
+
+            //alert("ver que onda");
             break;
 
 
@@ -172,36 +192,43 @@ function setValores(e, a1, a2, a3, a4, o) {
     a = Number(a2);
     o = Number(o);
 
-    document.getElementById("t1").innerHTML = a1;
-    document.getElementById("t2").innerHTML = a2;
+    if (o !== 5) {
 
-    if (o !== 1) {
+        document.getElementById("t1").innerHTML = a1;
+        document.getElementById("t2").innerHTML = a2;
+    }
+
+    if (o !== 1 && o !== 5) {
         b = Number(a3);
         document.getElementById("t3").innerHTML = a3;
     }
-    
-    if (o===3 || o===4) {
+
+    if (o === 3 || o === 4) {
         c = Number(a4);
         document.getElementById("t4").innerHTML = a4;
     }
     //alert(o);
     switch (o) {
         case 1:
-           //alert("entro case 1");
+            //alert("entro case 1");
             graficarFuncionLi();
             break;
 
         case 2:
-      //      alert("entro case 2");
+            //      alert("entro case 2");
             graficarFuncionCu();
             break;
         case 3:
-      //      alert("entro case 3");
+            //      alert("entro case 3");
             graficarFuncionSe();
             break;
         case 4:
-      //      alert("entro case 4");
+            //      alert("entro case 4");
             graficarFuncionCo();
+            break;
+        case 5:
+            
+            setTerminosPo(m);
             break;
 
     }
@@ -237,7 +264,7 @@ function graficarFuncionSe() {
 
         yS = (yf / 2 - m * escala * Math.sin(b + a * ((xS / escala)
                 - (xf / (escala * 2))
-                )) + c * escala );
+                )) + c * escala);
 
         ctx.beginPath();
         ctx.moveTo(xS - escala / 5, yA);
@@ -286,13 +313,14 @@ function graficarFuncionCu() {
 
 
 function setTerminosPo(n) {
+    
     document.getElementById("eq").innerHTML = "";
     document.getElementById("val").innerHTML = "";
     for (var i = n; i >= 1; i--) {
 
         var eq = "<span id=\"i" + i + "\" >1</span>x<sup> " + i + "</sup>+";
         var val = "termino " + i + "<input type=\"number\" id=\"a" + i + "\" \n\
-oninput=\"setValoresPo(e.value, n.value)\"  value=\"1\" step=\"0.05\" >  <br> <br>";
+oninput=\"setValoresPo()\"  value=\"1\" step=\"0.05\" >  <br> <br>";
 
         document.getElementById("eq").innerHTML += eq;
         document.getElementById("val").innerHTML += val;
@@ -301,18 +329,23 @@ oninput=\"setValoresPo(e.value, n.value)\"  value=\"1\" step=\"0.05\" >  <br> <b
 
     var eq = "<span id=\"i0\">1</span>";
     var val = "termino 0 <input type=\"number\" id=\"a0\" \n\
-oninput=\"setValoresPo(e.value, n.value)\"  value=\"1\" step=\"0.05\" >  <br> <br>";
+oninput=\"setValoresPo()\"  value=\"1\" step=\"0.05\" >  <br> <br>";
 
     document.getElementById("eq").innerHTML += eq;
     document.getElementById("val").innerHTML += val;
+    
+    setValoresPo();
 
 }
 
-function setValoresPo(e, n) {
-    escala = Number(e);
-
+function setValoresPo() {
+    //escala = Number(e);
+    //n = Number(n);
+    var n = m;
+    //alert(n);
     for (var i = 0; i <= n; i++) {
         document.getElementById("i" + i).innerHTML = document.getElementById("a" + i).value;
+        
     }
 
     graficarFuncionPo(n);
